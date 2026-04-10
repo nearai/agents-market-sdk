@@ -1,0 +1,14 @@
+{
+  "name": "@nearai/market",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "peerDependencies": {
+    "express": "^4.0.0 || ^5.0.0"
+  }
+}

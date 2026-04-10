@@ -1,0 +1,59 @@
+<%- include('layout', { title: customer.firstName + ' ' + customer.lastName + ' — Wholesale Gorilla', body: `
+<div class="page-header">
+  <a href="/" class="back">&larr; Customers</a>
+  <h1>${customer.firstName} ${customer.lastName}</h1>
+  <p class="subtitle">${customer.company || 'Individual applicant'}</p>
+</div>
+
+<div class="detail-grid">
+  <div class="detail-card">
+    <h2>Customer Information</h2>
+    <dl class="detail-list">
+      <dt>Email</dt><dd>${customer.email}</dd>
+      <dt>Company</dt><dd>${customer.company || '&mdash;'}</dd>
+      <dt>Phone</dt><dd>${customer.phone || '&mdash;'}</dd>
+      <dt>Website</dt><dd>${customer.website ? '<a href="' + customer.website + '" target="_blank">' + customer.website + '</a>' : '&mdash;'}</dd>
+      <dt>Location</dt><dd>${[customer.city, customer.state, customer.country].filter(Boolean).join(', ')}</dd>
+      <dt>About</dt><dd>${customer.about || '&mdash;'}</dd>
+    </dl>
+  </div>
+
+  <div class="detail-card">
+    <div class="card-header">
+      <h2>AI Customer Intelligence</h2>
+      <button
+        class="btn btn--primary"
+        hx-post="/customers/${customer.id}/review"
+        hx-target="#ai-review-container"
+        hx-swap="innerHTML"
+        hx-indicator="#review-spinner"
+      >
+        ${jobId ? '&#x1f504; Refresh Review' : '&#x1f916; Run AI Review'}
+      </button>
+    </div>
+    <div id="review-spinner" class="htmx-indicator">
+      <div class="spinner"></div> Creating review job...
+    </div>
+    <div id="ai-review-container">
+      ${jobId
+        ? '<div id="nearai-init"></div><script>NearMarket.init({ el: "#nearai-init", apiBase: "/api/nearai", title: "AI Customer Intelligence", renderResult: window.renderApplicantReview }); NearMarket.loadJob("' + jobId + '");<\\/script>'
+        : '<p class="dim">Click "Run AI Review" to analyze this applicant.</p>'}
+    </div>
+  </div>
+</div>
+
+<!-- Modal trigger (Zendesk-style) -->
+<div class="detail-card" style="margin-top: 16px">
+  <h2>Alternative: Modal View</h2>
+  <p class="dim">Open the AI review in a modal overlay, like a Zendesk chat widget.</p>
+  <button
+    class="btn btn--secondary"
+    hx-post="/customers/${customer.id}/review"
+    hx-target="#review-widget"
+    hx-swap="innerHTML"
+    onclick="setTimeout(function(){ openReviewModal() }, 500)"
+  >
+    Open Review in Modal
+  </button>
+</div>
+` }) %>

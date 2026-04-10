@@ -1,0 +1,34 @@
+<%- include('layout', { title: 'Jobs — Wholesale Gorilla', body: `
+<div class="page-header">
+  <h1>Jobs</h1>
+  <p class="subtitle">All AI review jobs from the marketplace</p>
+</div>
+
+${jobs.length === 0 ? '<p class="dim">No jobs yet. Go to a customer and click "Run AI Review".</p>' : `
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    ${jobs.map(j => {
+      const status = j.status || 'unknown';
+      const badge = status === 'completed' ? 'badge-done'
+        : status === 'in_progress' ? 'badge-progress'
+        : status === 'submitted' ? 'badge-submitted'
+        : 'badge-pending';
+      return '<tr>' +
+        '<td><a href="/jobs/' + j.job_id + '">' + (j.title || j.job_id.slice(0,8)) + '</a></td>' +
+        '<td><span class="' + badge + '">' + status + '</span></td>' +
+        '<td>' + new Date(j.created_at).toLocaleString() + '</td>' +
+        '<td><a href="/jobs/' + j.job_id + '" class="btn btn--sm">View</a></td>' +
+      '</tr>';
+    }).join('')}
+  </tbody>
+</table>
+`}
+` }) %>

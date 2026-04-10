@@ -1,0 +1,214 @@
+/* @nearai/market-react — namespaced with .nai- prefix */
+.nai-panel {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  width: 100%;
+  max-width: 440px;
+}
+
+.nai-header {
+  background: #f7f7f7;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.nai-header-icon { font-size: 18px; line-height: 1; }
+.nai-header-title { font-weight: 600; font-size: 15px; color: #212121; flex: 1; }
+.nai-header-close { color: #808080; font-size: 16px; cursor: pointer; }
+
+.nai-body {
+  background: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 20px;
+  flex: 1;
+  min-height: 320px;
+}
+
+.nai-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nai-divider { height: 1px; background: #ebebeb; }
+
+.nai-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  font-size: 12px;
+  color: #666;
+}
+.nai-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid #e0e0e0;
+  border-top-color: #404573;
+  border-radius: 50%;
+  animation: nai-spin 0.8s linear infinite;
+}
+@keyframes nai-spin { to { transform: rotate(360deg); } }
+
+.nai-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.nai-badge--submitted { background: #fff2cc; color: #996600; }
+.nai-badge--completed { background: #d6f5d6; color: #2e7d32; }
+
+.nai-error {
+  color: #c62828;
+  background: #fde2e2;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.nai-accept {
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nai-accept:hover { background: #276528; }
+.nai-accept:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Thread / Messages */
+.nai-thread { display: flex; flex-direction: column; gap: 8px; }
+.nai-msg {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 17px;
+  max-width: 85%;
+  white-space: pre-wrap;
+}
+.nai-msg--self  { background: #2e2e2e; color: #fff; border-radius: 12px 12px 4px 12px; }
+.nai-msg--agent { background: #edf0ff; color: #212121; border-radius: 12px 12px 12px 4px; border: 1px solid #d8ddf5; }
+
+.nai-msg-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 85%;
+}
+.nai-msg-wrap--self  { align-self: flex-end;   align-items: flex-end; }
+.nai-msg-wrap--agent { align-self: flex-start; align-items: flex-start; }
+.nai-msg-label {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.nai-msg-label--self  { color: #666; }
+.nai-msg-label--agent { color: #404573; }
+.nai-msg-time {
+  font-size: 10px;
+  color: #999;
+  padding: 0 4px;
+}
+
+.nai-system {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+.nai-system-line { flex: 1; height: 1px; background: #ececec; }
+.nai-system-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: #2e7d32;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Footer bar — pinned to bottom of panel */
+.nai-footer-bar {
+  background: #ffffff;
+  border-top: 1px solid #e6e6e6;
+  padding: 12px 20px;
+}
+
+/* Footer / Input */
+.nai-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.nai-input {
+  flex: 1;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #212121;
+  outline: none;
+  font-family: inherit;
+}
+.nai-input::placeholder { color: #999; }
+.nai-send {
+  background: #2e2e2e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nai-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* JSON result (default renderer) */
+.nai-json-result {
+  font-size: 12px;
+}
+.nai-json-result-toggle {
+  cursor: pointer;
+  font-weight: 600;
+  color: #404573;
+  padding: 4px 0;
+  user-select: none;
+}
+.nai-json-result-preview {
+  color: #666;
+  font-size: 11px;
+  padding: 4px 0;
+  word-break: break-all;
+}
+.nai-json-result-pre {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 11px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 4px 0 0;
+}

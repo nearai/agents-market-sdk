@@ -1,0 +1,74 @@
+<%- include('layout', { title: 'Create a Wholesale Account — Wholesale Gorilla', body: `
+<div class="page-layout">
+  <div class="page-layout__form">
+    ${typeof error !== 'undefined' && error ? '<div class="error" style="background:#fde2e2;color:#c62828;padding:12px;border-radius:6px;margin-bottom:16px;font-size:13px">' + error + '</div>' : ''}
+    <form class="wf" action="/submit-review" method="POST">
+      <h1 class="wf__title">Create a Wholesale Account</h1>
+      <div class="wf__login">Already have an account? Login here.</div>
+
+      <h2 class="wf__section">Customer Information</h2>
+
+      <div class="wf__row">
+        <input class="wf__input" name="firstName" placeholder="First Name" required />
+        <input class="wf__input" name="lastName" placeholder="Last Name" required />
+      </div>
+      <div class="wf__row">
+        <input class="wf__input" name="email" placeholder="Email" type="email" required />
+        <input class="wf__input" name="companyName" placeholder="Company Name" />
+      </div>
+      <div class="wf__row">
+        <input class="wf__input" name="taxId" placeholder="Tax ID/ABN/VAT Number" />
+        <input class="wf__input" name="phone" placeholder="Phone Number" />
+      </div>
+      <div class="wf__row">
+        <input class="wf__input" name="website" placeholder="Website" />
+      </div>
+      <textarea
+        class="wf__textarea"
+        name="about"
+        placeholder="Tell us a little about yourself so that we can verify your business identity."
+        rows="4"
+      ></textarea>
+
+      <h2 class="wf__section">Shipping Address</h2>
+      <input class="wf__input" name="addressLine1" placeholder="Address Line 1" />
+      <input class="wf__input" name="addressLine2" placeholder="Address Line 2" />
+
+      <div class="wf__row">
+        <div class="wf__field">
+          <label class="wf__label">CITY</label>
+          <input class="wf__input" name="city" placeholder="City" />
+        </div>
+        <div class="wf__field">
+          <label class="wf__label">COUNTRY</label>
+          <select class="wf__input" name="country">
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Ukraine</option>
+            <option>Germany</option>
+            <option>France</option>
+            <option>Australia</option>
+            <option>Canada</option>
+          </select>
+        </div>
+      </div>
+      <div class="wf__row">
+        <div class="wf__field">
+          <label class="wf__label">STATE/PROVINCE</label>
+          <input class="wf__input" name="state" placeholder="State / Province" />
+        </div>
+        <div class="wf__field">
+          <label class="wf__label">ZIP/POSTAL CODE</label>
+          <input class="wf__input" name="zip" placeholder="Zip/postal code" />
+        </div>
+      </div>
+
+      <button type="submit" class="wf__submit">CONTINUE</button>
+    </form>
+  </div>
+
+  <div class="page-layout__widget">
+    <div id="review-panel"></div>
+  </div>
+</div>
+` }) %>

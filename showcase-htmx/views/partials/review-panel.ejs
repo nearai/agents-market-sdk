@@ -1,0 +1,11 @@
+<div id="nearai-embed-<%= jobId ? jobId.slice(0,8) : 'none' %>"></div>
+<script>
+  if (window.NearMarket) NearMarket.destroy();
+  NearMarket.init({
+    el: '#nearai-embed-<%= jobId ? jobId.slice(0,8) : "none" %>',
+    apiBase: '/api/nearai',
+    title: 'AI Customer Intelligence',
+    renderResult: window.renderApplicantReview,
+  });
+  NearMarket.loadJob('<%= jobId %>');
+</script>

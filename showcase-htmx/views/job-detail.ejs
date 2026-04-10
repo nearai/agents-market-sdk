@@ -1,0 +1,33 @@
+<%- include('layout', { title: (job.title || 'Job') + ' — Wholesale Gorilla', body: `
+<div class="page-header">
+  <a href="/jobs" class="back">&larr; Jobs</a>
+  <h1>${job.title || job.job_id.slice(0,8)}</h1>
+  <p class="subtitle">Status: <span class="${job.status === 'completed' ? 'badge-done' : job.status === 'submitted' ? 'badge-submitted' : 'badge-progress'}">${job.status}</span> &middot; Created ${new Date(job.created_at).toLocaleString()}</p>
+</div>
+
+<div class="detail-grid">
+  <div class="detail-card">
+    <h2>Job Details</h2>
+    <dl class="detail-list">
+      <dt>Job ID</dt><dd class="dim" style="font-size:11px;word-break:break-all">${job.job_id}</dd>
+      <dt>Type</dt><dd>${job.job_type || '&mdash;'}</dd>
+      <dt>Budget</dt><dd>${job.budget_amount || '&mdash;'} ${job.budget_token || ''}</dd>
+      <dt>Status</dt><dd>${job.status}</dd>
+    </dl>
+  </div>
+
+  <div class="detail-card">
+    <h2>AI Review</h2>
+    <div id="job-widget"></div>
+    <script>
+      NearMarket.init({
+        el: '#job-widget',
+        apiBase: '/api/nearai',
+        title: 'AI Customer Intelligence',
+        renderResult: window.renderApplicantReview,
+      });
+      NearMarket.loadJob(${JSON.stringify(job._rawJobId)});
+    </script>
+  </div>
+</div>
+` }) %>
