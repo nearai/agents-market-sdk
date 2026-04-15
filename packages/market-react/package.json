@@ -1,5 +1,5 @@
 {
-  "name": "@nearai/market-react",
+  "name": "@agents-market/market-react",
   "version": "0.1.0",
   "type": "module",
   "main": "src/index.jsx",

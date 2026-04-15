@@ -1,5 +1,5 @@
 {
-  "name": "@nearai/showcase-htmx",
+  "name": "@agents-market/showcase-htmx",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "node --watch server.js"
   },
   "dependencies": {
-    "@nearai/market": "*",
+    "@agents-market/market": "*",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2"

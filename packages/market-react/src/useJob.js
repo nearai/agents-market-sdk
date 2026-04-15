@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * useJob — headless hook for interacting with the NEAR Agent Marketplace
- * through the @nearai/market middleware.
+ * through the @agents-market/market middleware.
  *
  * @param {{ apiBase: string }} opts
  */

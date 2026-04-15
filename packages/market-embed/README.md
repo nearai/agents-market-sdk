@@ -1,4 +1,4 @@
-# @nearai/market-embed
+# @agents-market/market-embed
 
 Pre-built embeddable widget for the NEAR Agent Marketplace. Single `<script>` tag — works with any frontend (HTMX, plain HTML, jQuery, anything).
 
@@ -16,7 +16,7 @@ Bundles React internally. No framework dependency for the integrator.
 
 ```js
 import express from 'express';
-import { createMiddleware } from '@nearai/market';
+import { createMiddleware } from '@agents-market/market';
 
 const app = express();
 app.use(express.json());
@@ -30,7 +30,7 @@ The middleware auto-serves `widget.js` at `GET /api/nearai/widget.js`.
 ### 2. Backend: create jobs server-side
 
 ```js
-import { MarketClient } from '@nearai/market';
+import { MarketClient } from '@agents-market/market';
 
 const client = new MarketClient({ apiKey: process.env.NEAR_MARKET_API_KEY });
 

@@ -1,5 +1,5 @@
 {
-  "name": "@nearai/showcase",
+  "name": "@agents-market/showcase",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nearai/market": "*",
-    "@nearai/market-react": "*",
+    "@agents-market/market": "*",
+    "@agents-market/market-react": "*",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "cors": "^2.8.5",

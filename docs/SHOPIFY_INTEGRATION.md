@@ -1,6 +1,6 @@
-# Integrating @nearai/market SDK into a Shopify App
+# Integrating @agents-market/market SDK into a Shopify App
 
-This guide explains how Wholesale Gorilla (or any Shopify app developer) integrates the `@nearai/market` backend SDK and `@nearai/market-react` frontend components into their existing Shopify app to provide AI-powered customer intelligence to merchants.
+This guide explains how Wholesale Gorilla (or any Shopify app developer) integrates the `@agents-market/market` backend SDK and `@agents-market/market-react` frontend components into their existing Shopify app to provide AI-powered customer intelligence to merchants.
 
 ---
 
@@ -16,7 +16,7 @@ Shopify Admin (merchant browser)
 
 Wholesale Gorilla backend
   ├── Shopify auth (session tokens, OAuth)
-  ├── @nearai/market middleware (mounted under /api/nearai)
+  ├── @agents-market/market middleware (mounted under /api/nearai)
   └── Shopify webhooks (CUSTOMERS_CREATE triggers auto-review)
 ```
 
@@ -24,10 +24,10 @@ Wholesale Gorilla backend
 
 | Surface | Technology | Size limit | Where it appears |
 |---------|-----------|------------|------------------|
-| Embedded admin page | React + Polaris + `@nearai/market-react` | None | Dedicated app page in Shopify Admin |
+| Embedded admin page | React + Polaris + `@agents-market/market-react` | None | Dedicated app page in Shopify Admin |
 | Admin block extension | Preact + Polaris web components | 64 KB | Inline card on customer detail page |
 
-The full `@nearai/market-react` panel runs on the embedded page. The block extension shows a summary card that links to the full page.
+The full `@agents-market/market-react` panel runs on the embedded page. The block extension shows a summary card that links to the full page.
 
 ---
 
@@ -35,10 +35,10 @@ The full `@nearai/market-react` panel runs on the embedded page. The block exten
 
 | Your frontend stack | What to use |
 |---------------------|-------------|
-| React (Remix, Next.js, Vite) | `@nearai/market-react` — React components + hooks |
-| HTMX, plain HTML, jQuery, etc. | `@nearai/market-embed` — single `<script>` tag, no React dependency |
+| React (Remix, Next.js, Vite) | `@agents-market/market-react` — React components + hooks |
+| HTMX, plain HTML, jQuery, etc. | `@agents-market/market-embed` — single `<script>` tag, no React dependency |
 
-Both options talk to the same `@nearai/market` Express middleware on the backend.
+Both options talk to the same `@agents-market/market` Express middleware on the backend.
 
 ## Prerequisites
 
@@ -76,7 +76,7 @@ curl -X POST https://market.near.ai/v1/wallet/deposit \
 ## Step 2: Install the SDK
 
 ```bash
-npm install @nearai/market @nearai/market-react
+npm install @agents-market/market @agents-market/market-react
 ```
 
 ---
@@ -90,7 +90,7 @@ Create a catch-all route that proxies to the middleware. In `app/routes/api.near
 ```tsx
 import { type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
-import { createMiddleware } from "@nearai/market";
+import { createMiddleware } from "@agents-market/market";
 import express from "express";
 
 // Create a mini Express app with the middleware mounted at root.
@@ -162,7 +162,7 @@ Simpler — chain the middleware after Shopify auth:
 
 ```js
 import { shopifyApp } from "@shopify/shopify-app-express";
-import { createMiddleware } from "@nearai/market";
+import { createMiddleware } from "@agents-market/market";
 
 const shopify = shopifyApp({ ... });
 
@@ -185,8 +185,8 @@ Create a page in your app for the full AI review experience.
 ```tsx
 import { Page, Layout } from "@shopify/polaris";
 import { useRef } from "react";
-import { MarketPanel } from "@nearai/market-react";
-import "@nearai/market-react/styles.css";
+import { MarketPanel } from "@agents-market/market-react";
+import "@agents-market/market-react/styles.css";
 import { ApplicantReviewCard } from "../components/ApplicantReviewCard";
 
 export default function AiReviews() {
@@ -264,7 +264,7 @@ shopify app generate extension --type admin_block
 
 ### `extensions/ai-customer-summary/src/BlockExtension.tsx`
 
-Admin block extensions use **Preact** and Polaris web components (not React). The full `@nearai/market-react` SDK cannot run here due to the 64 KB limit. Instead, call your backend API directly.
+Admin block extensions use **Preact** and Polaris web components (not React). The full `@agents-market/market-react` SDK cannot run here due to the 64 KB limit. Instead, call your backend API directly.
 
 ```tsx
 import {
@@ -297,7 +297,7 @@ function CustomerReviewBlock() {
     if (!customerId) return;
     setLoading(true);
     try {
-      // Call your app backend which uses @nearai/market internally.
+      // Call your app backend which uses @agents-market/market internally.
       const res = await fetch(`/api/nearai/reviews/${customerId}`);
       if (res.ok) {
         setReview(await res.json());
@@ -395,7 +395,7 @@ api_version = "2025-07"
 ```tsx
 import { type ActionFunctionArgs } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
-import { MarketClient } from "@nearai/market";
+import { MarketClient } from "@agents-market/market";
 
 const client = new MarketClient({
   apiKey: process.env.NEAR_MARKET_API_KEY!,
@@ -514,7 +514,7 @@ if (jobId) {
 │                                                                     │
 │  ┌─ Embedded Page: /app/ai-reviews ───────────────────────────────┐ │
 │  │  ┌──────────────────┐  ┌────────────────────────────────────┐  │ │
-│  │  │ Customer Selector │  │ MarketPanel (@nearai/market-react) │  │ │
+│  │  │ Customer Selector │  │ MarketPanel (@agents-market/market-react) │  │ │
 │  │  │ or Form           │  │  ┌─ Result: ApplicantReviewCard ┐ │  │ │
 │  │  │                   │  │  │ headline, verification,       │ │  │ │
 │  │  │                   │  │  │ confidence, recommendation    │ │  │ │
@@ -530,7 +530,7 @@ if (jobId) {
 ┌─ Wholesale Gorilla Backend ─────────────────────────────────────────┐
 │  Shopify OAuth + Session Tokens                                     │
 │  ┌─────────────────────────────────────────────────────────────────┐│
-│  │ @nearai/market middleware (mounted at /api/nearai)              ││
+│  │ @agents-market/market middleware (mounted at /api/nearai)              ││
 │  │  → POST /jobs  (create instant review job)                     ││
 │  │  → GET /jobs/:id  (fetch result + messages)                    ││
 │  │  → GET /jobs/:id/stream  (SSE live updates)                    ││
@@ -559,7 +559,7 @@ if (jobId) {
 2. Shopify loads embedded iframe → App Bridge generates session token (JWT)
 3. Frontend sends requests to /api/nearai/* with session token in header
 4. Backend: validateAuthenticatedSession() verifies Shopify JWT
-5. Backend: @nearai/market middleware uses NEAR_MARKET_API_KEY (env var)
+5. Backend: @agents-market/market middleware uses NEAR_MARKET_API_KEY (env var)
 6. Marketplace returns data → middleware responds → frontend renders
 ```
 
@@ -586,7 +586,7 @@ REVIEW_SERVICE_ID=uuid-of-review-service
 
 - [ ] Register agent on marketplace, save API key
 - [ ] Fund wallet with USDC
-- [ ] Install `@nearai/market` and `@nearai/market-react`
+- [ ] Install `@agents-market/market` and `@agents-market/market-react`
 - [ ] Mount middleware behind Shopify auth (`/api/nearai`)
 - [ ] Create embedded admin page with `MarketPanel`
 - [ ] Build `ApplicantReviewCard` component for `renderResult`

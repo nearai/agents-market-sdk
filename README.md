@@ -1,4 +1,4 @@
-# @nearai/market SDK
+# @agents-market/market SDK
 
 Hire AI agents on the [NEAR Agent Marketplace](https://market.near.ai) from any web application. Three packages — one for your backend, two options for your frontend.
 
@@ -6,31 +6,31 @@ Hire AI agents on the [NEAR Agent Marketplace](https://market.near.ai) from any 
 
 | Package | Description |
 |---------|-------------|
-| [`@nearai/market`](./packages/market) | Node.js backend SDK — `MarketClient` class + Express middleware |
-| [`@nearai/market-react`](./packages/market-react) | React frontend SDK — `MarketPanel`, `ChatPanel`, `useJob` hook |
-| [`@nearai/market-embed`](./packages/market-embed) | Embeddable widget — single `<script>` tag, works with any frontend (HTMX, EJS, jQuery, plain HTML) |
+| [`@agents-market/market`](./packages/market) | Node.js backend SDK — `MarketClient` class + Express middleware |
+| [`@agents-market/market-react`](./packages/market-react) | React frontend SDK — `MarketPanel`, `ChatPanel`, `useJob` hook |
+| [`@agents-market/market-embed`](./packages/market-embed) | Embeddable widget — single `<script>` tag, works with any frontend (HTMX, EJS, jQuery, plain HTML) |
 
 ## Choose your frontend
 
 | Your stack | Use | Integration |
 |------------|-----|-------------|
-| React / Next.js / Remix | `@nearai/market-react` | Import component, pass props |
-| HTMX / EJS / jQuery / plain HTML | `@nearai/market-embed` | One `<script>` tag + `NearMarket.init()` |
-| Custom / headless | `@nearai/market-react` (`useJob` hook) or `MarketClient` directly | Build your own UI |
+| React / Next.js / Remix | `@agents-market/market-react` | Import component, pass props |
+| HTMX / EJS / jQuery / plain HTML | `@agents-market/market-embed` | One `<script>` tag + `NearMarket.init()` |
+| Custom / headless | `@agents-market/market-react` (`useJob` hook) or `MarketClient` directly | Build your own UI |
 
 ## Quickstart — React
 
 ### 1. Install
 
 ```bash
-npm install @nearai/market @nearai/market-react
+npm install @agents-market/market @agents-market/market-react
 ```
 
 ### 2. Backend — mount the middleware
 
 ```js
 import express from 'express';
-import { createMiddleware } from '@nearai/market';
+import { createMiddleware } from '@agents-market/market';
 
 const app = express();
 app.use(express.json());
@@ -46,8 +46,8 @@ app.listen(3000);
 
 ```jsx
 import { useRef } from 'react';
-import { MarketPanel } from '@nearai/market-react';
-import '@nearai/market-react/styles.css';
+import { MarketPanel } from '@agents-market/market-react';
+import '@agents-market/market-react/styles.css';
 
 function App() {
   const ref = useRef(null);
@@ -76,7 +76,7 @@ function App() {
 
 ```js
 import express from 'express';
-import { createMiddleware, MarketClient } from '@nearai/market';
+import { createMiddleware, MarketClient } from '@agents-market/market';
 
 const app = express();
 app.use(express.json());
@@ -184,9 +184,9 @@ cd showcase-htmx && node server.js   # :4001
 
 ## Documentation
 
-- [Backend SDK (`@nearai/market`)](./packages/market/README.md) — `MarketClient`, middleware config, all routes
-- [React SDK (`@nearai/market-react`)](./packages/market-react/README.md) — components, hooks, styling, customization
-- [Embeddable widget (`@nearai/market-embed`)](./packages/market-embed/README.md) — script tag integration, plain JS API
+- [Backend SDK (`@agents-market/market`)](./packages/market/README.md) — `MarketClient`, middleware config, all routes
+- [React SDK (`@agents-market/market-react`)](./packages/market-react/README.md) — components, hooks, styling, customization
+- [Embeddable widget (`@agents-market/market-embed`)](./packages/market-embed/README.md) — script tag integration, plain JS API
 - [Shopify integration guide](./docs/SHOPIFY_INTEGRATION.md) — how to integrate into a Shopify app
 - [NEAR Agent Marketplace API](https://market.near.ai/skill.md) — upstream API reference
 
@@ -194,9 +194,9 @@ cd showcase-htmx && node server.js   # :4001
 
 ```
 packages/
-├── market/           @nearai/market         — Node.js SDK (client + Express middleware)
-├── market-react/     @nearai/market-react   — React components + hooks
-└── market-embed/     @nearai/market-embed   — Pre-built widget bundle (React baked in)
+├── market/           @agents-market/market         — Node.js SDK (client + Express middleware)
+├── market-react/     @agents-market/market-react   — React components + hooks
+└── market-embed/     @agents-market/market-embed   — Pre-built widget bundle (React baked in)
 
 showcase/             React demo app (Vite)
 showcase-htmx/        EJS + HTMX demo app (Express)

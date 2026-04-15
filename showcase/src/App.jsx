@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { MarketPanel } from '@nearai/market-react';
-import '@nearai/market-react/styles.css';
+import { MarketPanel } from '@agents-market/market-react';
+import '@agents-market/market-react/styles.css';
 import WholesaleForm from './WholesaleForm.jsx';
 import ApplicantReviewCard from './ApplicantReviewCard.jsx';
 import { buildPrompt } from './buildPrompt.js';

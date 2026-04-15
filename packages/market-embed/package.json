@@ -1,5 +1,5 @@
 {
-  "name": "@nearai/market-embed",
+  "name": "@agents-market/market-embed",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@nearai/market-react": "*",
+    "@agents-market/market-react": "*",
     "dompurify": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

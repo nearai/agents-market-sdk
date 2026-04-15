@@ -1,8 +1,8 @@
 import React, { createRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import DOMPurify from 'dompurify';
-import { MarketPanel } from '@nearai/market-react';
-import css from '@nearai/market-react/styles.css?inline';
+import { MarketPanel } from '@agents-market/market-react';
+import css from '@agents-market/market-react/styles.css?inline';
 
 // Inject CSS into <head> on load.
 const style = document.createElement('style');

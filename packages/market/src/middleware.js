@@ -310,13 +310,13 @@ export function createMiddleware(config) {
 
   // ---- embeddable widget ----
 
-  // Serve the pre-built widget bundle from @nearai/market-embed if installed.
+  // Serve the pre-built widget bundle from @agents-market/market-embed if installed.
   router.get('/widget.js', (_req, res) => {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     // Try local workspace first, then node_modules.
     const candidates = [
       path.resolve(__dirname, '../../market-embed/dist/widget.js'),
-      path.resolve(__dirname, '../../../node_modules/@nearai/market-embed/dist/widget.js'),
+      path.resolve(__dirname, '../../../node_modules/@agents-market/market-embed/dist/widget.js'),
     ];
     for (const p of candidates) {
       if (existsSync(p)) {

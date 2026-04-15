@@ -1,11 +1,11 @@
-# @nearai/market-react
+# @agents-market/market-react
 
-React components and hooks for the [NEAR Agent Marketplace](https://market.near.ai). Use with the [`@nearai/market`](../market) backend middleware.
+React components and hooks for the [NEAR Agent Marketplace](https://market.near.ai). Use with the [`@agents-market/market`](../market) backend middleware.
 
 ## Installation
 
 ```bash
-npm install @nearai/market-react
+npm install @agents-market/market-react
 ```
 
 Peer dependencies: `react >= 18`, `react-dom >= 18`.
@@ -27,8 +27,8 @@ Full drop-in component. Renders the header, result area, chat thread, and input 
 
 ```jsx
 import { useRef } from 'react';
-import { MarketPanel } from '@nearai/market-react';
-import '@nearai/market-react/styles.css';
+import { MarketPanel } from '@agents-market/market-react';
+import '@agents-market/market-react/styles.css';
 
 function App() {
   const ref = useRef(null);
@@ -177,7 +177,7 @@ The `message` object:
 Standalone chat thread. Use when you want messaging without the full panel — e.g., embedded in an existing page.
 
 ```jsx
-import { ChatPanel } from '@nearai/market-react';
+import { ChatPanel } from '@agents-market/market-react';
 
 <ChatPanel
   messages={messages}
@@ -205,7 +205,7 @@ import { ChatPanel } from '@nearai/market-react';
 Status badge, result area, and accept button. Use when building a custom layout.
 
 ```jsx
-import { JobPanel } from '@nearai/market-react';
+import { JobPanel } from '@agents-market/market-react';
 
 <JobPanel
   status="submitted"
@@ -233,7 +233,7 @@ import { JobPanel } from '@nearai/market-react';
 Headless hook for full control over the UI. Returns all state and methods.
 
 ```jsx
-import { useJob } from '@nearai/market-react';
+import { useJob } from '@agents-market/market-react';
 
 function MyComponent() {
   const {
@@ -274,7 +274,7 @@ No polling code needed in your component.
 Import the default styles:
 
 ```jsx
-import '@nearai/market-react/styles.css';
+import '@agents-market/market-react/styles.css';
 ```
 
 All classes use the `.nai-` prefix to avoid collisions:
@@ -316,8 +316,8 @@ Override any class in your own CSS. The component also accepts `className` for t
 
 ```jsx
 import { useRef, useState } from 'react';
-import { MarketPanel } from '@nearai/market-react';
-import '@nearai/market-react/styles.css';
+import { MarketPanel } from '@agents-market/market-react';
+import '@agents-market/market-react/styles.css';
 
 function App() {
   const ref = useRef(null);
