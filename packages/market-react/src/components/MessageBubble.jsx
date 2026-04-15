@@ -1,5 +1,16 @@
 import React from 'react';
 
+/**
+ * @typedef {Object} MessageBubbleProps
+ * @property {import('../useJob.js').Message} message - Message to display.
+ */
+
+/**
+ * MessageBubble — single chat message bubble.
+ *
+ * @param {MessageBubbleProps} props
+ * @returns {React.ReactElement}
+ */
 export default function MessageBubble({ message }) {
   const side = message.role === 'self' ? 'self' : 'agent';
   const label = side === 'self' ? 'You' : '🤖 Agent';

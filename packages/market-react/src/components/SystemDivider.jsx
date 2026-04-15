@@ -1,5 +1,16 @@
 import React from 'react';
 
+/**
+ * @typedef {Object} SystemDividerProps
+ * @property {import('../useJob.js').Message} message - System message to display.
+ */
+
+/**
+ * SystemDivider — system message divider in the chat thread.
+ *
+ * @param {SystemDividerProps} props
+ * @returns {React.ReactElement}
+ */
 export default function SystemDivider({ message }) {
   const when = message.createdAt
     ? new Date(message.createdAt).toLocaleString(undefined, {

@@ -7,6 +7,14 @@ import { MarketClient } from './client.js';
 import { parseDeliverable, mapStatus, sanitizeMessageBody } from './utils.js';
 
 /**
+ * @typedef {Object} MiddlewareConfig
+ * @property {string} apiKey - API key for the marketplace.
+ * @property {string} [baseUrl] - Base URL of the marketplace API.
+ * @property {number} [pollInterval] - SSE polling interval in ms (default: 3000).
+ * @property {string | string[] | boolean} [corsOrigins] - Allowed CORS origins (default: false).
+ */
+
+/**
  * createMiddleware(config) — Express Router factory.
  *
  * Mount on any path:
@@ -22,6 +30,9 @@ import { parseDeliverable, mapStatus, sanitizeMessageBody } from './utils.js';
  *   POST /jobs/:id/message
  *   POST /jobs/:id/accept
  *   GET  /services
+ *
+ * @param {MiddlewareConfig} config
+ * @returns {import('express').Router}
  */
 export function createMiddleware(config) {
   const { apiKey, baseUrl, pollInterval = 3000, corsOrigins } = config || {};
@@ -301,7 +312,7 @@ export function createMiddleware(config) {
   // Browse services
   router.get('/services', async (req, res) => {
     try {
-      const data = await client.services.list({ category: req.query.category });
+      const data = await client.services.list({ category: /** @type {string | undefined} */ (req.query.category) });
       res.json(data);
     } catch (err) {
       res.status(err.status || 500).json({ error: err.message });
