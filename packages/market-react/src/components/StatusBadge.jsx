@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * @typedef {Object} StatusBadgeProps
+ * @property {string} status - Current job status (e.g. 'idle', 'submitting', 'in_progress', 'submitted', 'completed', 'error').
+ */
+
 const LABELS = {
   idle: 'Idle',
   submitting: 'Creating job\u2026',
@@ -9,6 +14,12 @@ const LABELS = {
   error: 'Error',
 };
 
+/**
+ * StatusBadge — displays a status indicator with label.
+ *
+ * @param {StatusBadgeProps} props
+ * @returns {React.ReactElement | null}
+ */
 export default function StatusBadge({ status }) {
   const label = LABELS[status] || status;
 

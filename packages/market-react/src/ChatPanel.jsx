@@ -4,15 +4,20 @@ import SystemDivider from './components/SystemDivider.jsx';
 import InputBar from './components/InputBar.jsx';
 
 /**
+ * @typedef {Object} ChatPanelProps
+ * @property {import('./useJob.js').Message[]} [messages] - Array of message objects.
+ * @property {boolean} [disabled] - Disable input (only when showInput is true).
+ * @property {string} [placeholder] - Input placeholder text.
+ * @property {(message: import('./useJob.js').Message, DefaultBubble: React.ComponentType) => React.ReactNode} [renderMessage] - Custom message renderer.
+ * @property {(text: string) => void} [onSend] - Called with message text.
+ * @property {boolean} [showInput] - Render the input bar (default: true).
+ */
+
+/**
  * ChatPanel — standalone chat thread + optional input bar.
  *
- * Props:
- *   messages       — array of { id, role, body, createdAt, isDeliverable? }
- *   disabled       — disable input (only when showInput is true)
- *   placeholder    — input placeholder text
- *   renderMessage  — (message, DefaultBubble) => ReactNode
- *   onSend         — called with message text
- *   showInput      — render the input bar (default true for standalone use)
+ * @param {ChatPanelProps} props
+ * @returns {React.ReactElement}
  */
 export default function ChatPanel({
   messages = [],

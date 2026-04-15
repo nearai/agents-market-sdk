@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
 
+/**
+ * @typedef {Object} InputBarProps
+ * @property {boolean} [disabled] - Whether the input is disabled.
+ * @property {string} [placeholder] - Placeholder text.
+ * @property {(text: string) => void} [onSend] - Called with the message text on send.
+ */
+
+/**
+ * InputBar — text input with send button.
+ *
+ * @param {InputBarProps} props
+ * @returns {React.ReactElement}
+ */
 export default function InputBar({ disabled, placeholder, onSend }) {
   const [draft, setDraft] = useState('');
 

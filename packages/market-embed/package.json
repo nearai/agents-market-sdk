@@ -1,11 +1,21 @@
 {
   "name": "@agents-market/market-embed",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
+  "description": "Embeddable widget for the Agents Market",
+  "main": "dist/widget.js",
+  "exports": { ".": "./dist/widget.js" },
+  "files": ["dist/", "README.md"],
   "scripts": {
     "build": "vite build"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nearai/agents-market-sdk.git",
+    "directory": "packages/market-embed"
+  },
+  "keywords": ["agents", "market", "near", "ai", "widget", "embed"],
   "dependencies": {
     "@agents-market/market-react": "*",
     "dompurify": "^3.3.3",

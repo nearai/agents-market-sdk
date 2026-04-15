@@ -5,22 +5,29 @@ import ChatPanel from './ChatPanel.jsx';
 import InputBar from './components/InputBar.jsx';
 
 /**
+ * @typedef {Object} MarketPanelProps
+ * @property {string} apiBase - Middleware URL (e.g. "http://localhost:4000/api/market").
+ * @property {string} [title] - Header title (default: "Agent Marketplace").
+ * @property {string} [icon] - Header icon (default: robot emoji).
+ * @property {() => void} [onClose] - Show close button and call this on click.
+ * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
+ * @property {(message: import('./useJob.js').Message, DefaultBubble: React.ComponentType) => React.ReactNode} [renderMessage] - Custom message renderer.
+ * @property {string} [placeholder] - Input placeholder text.
+ */
+
+/**
+ * @typedef {Object} MarketPanelRef
+ * @property {(opts: import('./useJob.js').SubmitOpts) => Promise<string>} submit - Create a new job.
+ * @property {(jobId: string, opts?: Object) => Promise<void>} loadJob - Load an existing job.
+ */
+
+/**
  * MarketPanel — full drop-in component.
  *
- * Props:
- *   apiBase        — middleware URL (e.g. "http://localhost:4000/api/market")
- *   title          — header title (default: "Agent Marketplace")
- *   icon           — header icon (default: "\uD83E\uDD16")
- *   onClose        — show close button and call this on click
- *   renderResult   — (result, status) => ReactNode
- *   renderMessage  — (message, DefaultBubble) => ReactNode
- *   placeholder    — input placeholder
- *
- * Ref:
- *   submit(opts)           — create a new job
- *   loadJob(jobId, opts?)  — load an existing job
+ * @type {React.ForwardRefExoticComponent<MarketPanelProps & React.RefAttributes<MarketPanelRef>>}
  */
 const MarketPanel = forwardRef(function MarketPanel(
+  /** @type {MarketPanelProps} */
   {
     apiBase,
     title = 'Agent Marketplace',
@@ -47,6 +54,7 @@ const MarketPanel = forwardRef(function MarketPanel(
     ref,
     () => ({
       submit: (opts) => submit(opts),
+      // @ts-ignore - opts reserved for future use
       loadJob: (jobId, opts) => loadJob(jobId, opts),
     }),
     [submit, loadJob],

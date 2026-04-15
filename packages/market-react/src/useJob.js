@@ -1,10 +1,50 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
+ * @typedef {Object} UseJobOpts
+ * @property {string} [apiBase] - Middleware URL (default: "http://localhost:4000").
+ */
+
+/**
+ * @typedef {Object} SubmitOpts
+ * @property {string} title - Job title.
+ * @property {string} description - Job description.
+ * @property {{ amount: number, token: string }} [budget] - Budget for the job.
+ * @property {string} [serviceId] - Service ID for instant matching.
+ * @property {string} [category] - Category for instant matching.
+ * @property {string[]} [tags] - Tags for the job.
+ * @property {number} [deadlineSeconds] - Deadline in seconds.
+ */
+
+/**
+ * @typedef {Object} Message
+ * @property {string} id - Message ID.
+ * @property {'self' | 'agent' | 'system'} role - Message role.
+ * @property {string} body - Message body text.
+ * @property {string | null} createdAt - ISO timestamp or null.
+ * @property {boolean} [isDeliverable] - Whether the message is a deliverable notification.
+ * @property {Object} [parsedResult] - Parsed deliverable data.
+ */
+
+/**
+ * @typedef {Object} UseJobReturn
+ * @property {string | null} jobId - Current job ID.
+ * @property {string} status - Current job status (e.g. 'idle', 'submitting', 'in_progress', 'submitted', 'completed', 'error').
+ * @property {Object | null} result - Parsed deliverable result.
+ * @property {Message[]} messages - Chat messages.
+ * @property {string | null} error - Error message.
+ * @property {(opts: SubmitOpts) => Promise<string>} submit - Create a new job.
+ * @property {(id: string) => Promise<void>} loadJob - Load an existing job by ID.
+ * @property {(body: string) => Promise<void>} sendMessage - Send a follow-up message.
+ * @property {() => Promise<void>} accept - Accept the deliverable.
+ */
+
+/**
  * useJob — headless hook for interacting with the NEAR Agent Marketplace
  * through the @agents-market/market middleware.
  *
- * @param {{ apiBase: string }} opts
+ * @param {UseJobOpts} [opts]
+ * @returns {UseJobReturn}
  */
 export function useJob({ apiBase = 'http://localhost:4000' } = {}) {
   const [jobId, setJobId] = useState(null);
@@ -46,6 +86,7 @@ export function useJob({ apiBase = 'http://localhost:4000' } = {}) {
   /**
    * Load an existing job by ID and subscribe to SSE updates.
    * @param {string} id
+   * @param {Object} [_opts] - Reserved for future use.
    */
   const loadJob = useCallback(async (id) => {
     setError(null);

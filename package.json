@@ -3,9 +3,10 @@
   "private": true,
   "workspaces": ["packages/*", "showcase", "showcase-htmx"],
   "scripts": {
+    "build": "npm run build --workspace=packages/market-react && npm run build --workspace=packages/market-embed",
+    "build:widget": "npm run build --workspace=packages/market-embed",
     "dev:server": "node showcase/server.js",
     "dev:client": "npm run dev --workspace=showcase",
-    "dev": "npm run dev:server & npm run dev:client",
-    "build:widget": "npm run build --workspace=packages/market-embed"
+    "dev": "npm run dev:server & npm run dev:client"
   }
 }

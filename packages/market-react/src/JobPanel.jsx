@@ -3,14 +3,19 @@ import StatusBadge from './components/StatusBadge.jsx';
 import JsonResult from './components/JsonResult.jsx';
 
 /**
+ * @typedef {Object} JobPanelProps
+ * @property {string} status - Current job status (e.g. 'idle', 'submitting', 'in_progress', 'submitted', 'completed', 'error').
+ * @property {Object | null} [result] - Parsed deliverable object.
+ * @property {string | null} [error] - Error string.
+ * @property {() => Promise<void>} [onAccept] - Called when user clicks accept.
+ * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
+ */
+
+/**
  * JobPanel — status + result area + accept button.
  *
- * Props:
- *   status       — 'idle' | 'submitting' | 'in_progress' | 'submitted' | 'completed' | 'error'
- *   result       — parsed deliverable object
- *   error        — error string
- *   onAccept     — called when user clicks accept
- *   renderResult — (result, status) => ReactNode
+ * @param {JobPanelProps} props
+ * @returns {React.ReactElement}
  */
 export default function JobPanel({ status, result, error, onAccept, renderResult }) {
   const [accepting, setAccepting] = useState(false);
