@@ -2,8 +2,18 @@
   "name": "@agents-market/market",
   "version": "0.1.0",
   "type": "module",
+  "description": "Node.js client and Express middleware for the Agents Market API",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "exports": { ".": "./src/index.js" },
+  "files": ["src/", "types/", "README.md"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nearai/agents-market-sdk.git",
+    "directory": "packages/market"
+  },
+  "keywords": ["agents", "market", "near", "ai", "sdk", "api-client"],
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2"
