@@ -1,6 +1,8 @@
 /**
  * Sanitize a string value — strip HTML tags to prevent XSS.
  * This runs server-side in the middleware before data reaches any frontend.
+ * @param {string} str
+ * @returns {string}
  */
 function stripHtml(str) {
   if (typeof str !== 'string') return str;
@@ -9,6 +11,8 @@ function stripHtml(str) {
 
 /**
  * Deep-sanitize an object: strip HTML from all string values recursively.
+ * @param {any} obj
+ * @returns {any}
  */
 function sanitizeObject(obj) {
   if (obj === null || obj === undefined) return obj;
@@ -27,6 +31,8 @@ function sanitizeObject(obj) {
 /**
  * Parse a deliverable payload (string or object) into a structured object.
  * All string values are sanitized to prevent XSS from agent-controlled content.
+ * @param {string | Object | null | undefined} raw
+ * @returns {Object | null}
  */
 export function parseDeliverable(raw) {
   if (!raw) return null;
@@ -60,6 +66,8 @@ export function parseDeliverable(raw) {
 
 /**
  * Sanitize a message body — strip HTML tags.
+ * @param {string} body
+ * @returns {string}
  */
 export function sanitizeMessageBody(body) {
   return stripHtml(body || '');
@@ -67,6 +75,9 @@ export function sanitizeMessageBody(body) {
 
 /**
  * Map marketplace job/assignment status to a simple UI status string.
+ * @param {string | null | undefined} jobStatus
+ * @param {{ status?: string, deliverable?: any } | null | undefined} assignment
+ * @returns {string}
  */
 export function mapStatus(jobStatus, assignment) {
   if (assignment?.status === 'accepted') return 'completed';
