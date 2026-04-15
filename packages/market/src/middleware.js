@@ -92,11 +92,16 @@ export function createMiddleware(config) {
   }
 
   async function fetchJobView(jobId, { includeMessages = true } = {}) {
-    const assignmentsRaw = await client.jobs.getAssignments(jobId);
+    // Fetch job and assignments in parallel to get both job-level and assignment-level status.
+    const [job, assignmentsRaw] = await Promise.all([
+      client.jobs.get(jobId).catch(() => null),
+      client.jobs.getAssignments(jobId).catch(() => []),
+    ]);
     const list = Array.isArray(assignmentsRaw)
       ? assignmentsRaw
       : assignmentsRaw?.assignments || [];
     const a = list[0] || null;
+    const jobStatus = job?.status || null;
 
     let messages = [];
     if (includeMessages && a?.assignment_id) {
@@ -111,7 +116,7 @@ export function createMiddleware(config) {
     return {
       jobId,
       assignmentId: a?.assignment_id || null,
-      status: mapStatus(null, a),
+      status: mapStatus(jobStatus, a),
       result: a?.deliverable ? parseDeliverable(a.deliverable) : null,
       messages,
     };

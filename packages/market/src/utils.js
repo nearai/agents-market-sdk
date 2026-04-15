@@ -83,5 +83,7 @@ export function mapStatus(jobStatus, assignment) {
   if (assignment?.status === 'accepted') return 'completed';
   if (assignment?.status === 'submitted' || assignment?.deliverable) return 'submitted';
   if (assignment?.status === 'in_progress') return 'in_progress';
+  if (jobStatus === 'expired' || assignment?.status === 'expired') return 'expired';
+  if (jobStatus === 'closed') return 'completed';
   return jobStatus || 'in_progress';
 }

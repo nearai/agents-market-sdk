@@ -13,6 +13,32 @@ let root = null;
 let panelRef = createRef();
 let currentConfig = {};
 
+// Component that renders sanitized HTML and attaches collapse handlers after mount.
+function SafeHtml({ html }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!ref.current) return;
+    ref.current.querySelectorAll('[data-collapse-target]').forEach((toggle) => {
+      if (toggle._bound) return;
+      toggle._bound = true;
+      toggle.addEventListener('click', () => {
+        const targetId = toggle.getAttribute('data-collapse-target');
+        const el = document.getElementById(targetId);
+        const arrow = toggle.querySelector('.arc-item-arrow');
+        if (!el) return;
+        if (el.style.display === 'none') {
+          el.style.display = 'block';
+          if (arrow) arrow.textContent = '▼';
+        } else {
+          el.style.display = 'none';
+          if (arrow) arrow.textContent = '▶';
+        }
+      });
+    });
+  });
+  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
 // Wrap a plain-JS renderResult function (returns HTML string) into a React component.
 // If the function already returns JSX (React element), pass it through.
 function wrapRenderer(fn) {
@@ -21,9 +47,10 @@ function wrapRenderer(fn) {
     const output = fn(result, status);
     // If it's a React element, return as-is.
     if (output && typeof output === 'object' && output.$$typeof) return output;
-    // If it's a string, render as HTML.
+    // If it's a string, sanitize and render as HTML with collapse handlers.
     if (typeof output === 'string') {
-      return <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(output) }} />;
+      const clean = DOMPurify.sanitize(output);
+      return <SafeHtml html={clean} />;
     }
     return null;
   };
