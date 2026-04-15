@@ -180,7 +180,7 @@ export class MarketClient {
    * @param {CreateInstantJobOpts} opts
    * @returns {Promise<any>}
    */
-  _createInstantJob(opts) {
+  async _createInstantJob(opts) {
     const payload = {
       title: opts.title,
       description: opts.description,
@@ -192,10 +192,12 @@ export class MarketClient {
     if (opts.serviceId) payload.service_id = opts.serviceId;
     if (opts.category) payload.category = opts.category;
     if (opts.matchQuery) payload.match_query = opts.matchQuery;
-    return this._request('/v1/jobs/instant', {
+    const response = await this._request('/v1/jobs/instant', {
       method: 'POST',
       body: JSON.stringify(payload),
     });
+    // Normalize: marketplace may wrap as { job: { job_id, ... } } or return flat.
+    return response?.job || response;
   }
 
   /**

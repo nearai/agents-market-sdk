@@ -72,6 +72,8 @@
 }
 .nai-badge--submitted { background: #fff2cc; color: #996600; }
 .nai-badge--completed { background: #d6f5d6; color: #2e7d32; }
+.nai-badge--expired { background: #f0f0f0; color: #666; }
+.nai-badge--error { background: #fde2e2; color: #c62828; }
 
 .nai-error {
   color: #c62828;

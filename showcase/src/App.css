@@ -108,8 +108,14 @@ body { margin: 0; }
 .arc-headline { font-weight: 700; font-size: 13px; color: #212121; }
 .arc-summary { font-weight: 400; font-size: 12px; color: #4d4d4d; line-height: 18px; }
 .arc-divider { height: 1px; background: #ebebeb; }
-.arc-section-title { font-weight: 600; font-size: 12px; color: #212121; }
-.arc-lines { font-size: 11px; color: #595959; line-height: 17px; display: flex; flex-direction: column; }
+.arc-items { display: flex; flex-direction: column; gap: 4px; }
+.arc-item { border: 1px solid #f0f0f0; border-radius: 6px; overflow: hidden; }
+.arc-item-header { display: flex; align-items: baseline; gap: 6px; padding: 8px 10px; font-size: 11px; color: #212121; }
+.arc-item-header--clickable { cursor: pointer; }
+.arc-item-header--clickable:hover { background: #fafafa; }
+.arc-item-arrow { font-size: 8px; color: #999; width: 10px; flex-shrink: 0; }
+.arc-item-label { font-weight: 600; }
+.arc-item-detail { padding: 0 10px 8px 26px; font-size: 11px; color: #595959; line-height: 16px; }
 
 .arc-reco { display: flex; gap: 10px; align-items: center; }
 .arc-reco-badge {

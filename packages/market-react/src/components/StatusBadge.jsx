@@ -11,6 +11,7 @@ const LABELS = {
   in_progress: 'Agent is working\u2026',
   submitted: 'Submitted \u2014 awaiting review',
   completed: 'Completed',
+  expired: 'Expired',
   error: 'Error',
 };
 
@@ -34,9 +35,10 @@ export default function StatusBadge({ status }) {
     );
   }
 
-  if (status === 'submitted' || status === 'completed') {
+  if (status === 'submitted' || status === 'completed' || status === 'expired' || status === 'error') {
     return <div className={`nai-badge nai-badge--${status}`}>{label}</div>;
   }
 
-  return null;
+  // Fallback for any unknown status
+  return <div className="nai-badge">{label}</div>;
 }

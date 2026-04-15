@@ -39,6 +39,10 @@ export default function JobPanel({ status, result, error, onAccept, renderResult
         <div className="nai-status">Ready to submit a job.</div>
       )}
 
+      {status === 'expired' && (
+        <div className="nai-status">This job has expired. No agent completed the work in time.</div>
+      )}
+
       <StatusBadge status={status} />
 
       {error && <div className="nai-error">{error}</div>}
