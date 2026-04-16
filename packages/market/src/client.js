@@ -188,6 +188,7 @@ export class MarketClient {
       budget_token: opts.budget?.token,
       deadline_seconds: opts.deadlineSeconds ?? 86400,
       tags: opts.tags,
+      is_private: opts.isPrivate ?? true,
     };
     if (opts.serviceId) payload.service_id = opts.serviceId;
     if (opts.category) payload.category = opts.category;
