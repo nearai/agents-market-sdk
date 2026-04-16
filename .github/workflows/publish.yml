@@ -27,16 +27,19 @@ jobs:
           npm run build --workspace=packages/market-embed
 
       - name: Publish @agents-market/market
+        continue-on-error: true
         run: npm publish --workspace=packages/market --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @agents-market/market-react
+        continue-on-error: true
         run: npm publish --workspace=packages/market-react --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @agents-market/market-embed
+        continue-on-error: true
         run: npm publish --workspace=packages/market-embed --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
