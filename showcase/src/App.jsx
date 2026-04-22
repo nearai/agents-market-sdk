@@ -46,6 +46,7 @@ export default function App() {
             apiBase={API_BASE}
             title="AI Customer Intelligence"
             icon="🤖"
+            acceptLabel="Accept"
             renderResult={(result) => <ApplicantReviewCard data={result} />}
           />
         </div>

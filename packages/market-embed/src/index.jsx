@@ -63,6 +63,7 @@ function EmbedWrapper({ config }) {
       apiBase={config.apiBase || '/api/nearai'}
       title={config.title || 'Agent Marketplace'}
       icon={config.icon || '🤖'}
+      acceptLabel={config.acceptLabel !== undefined ? config.acceptLabel : 'Accept & release escrow'}
       renderResult={wrapRenderer(config.renderResult)}
       renderMessage={config.renderMessage || undefined}
       placeholder={config.placeholder || undefined}
@@ -81,6 +82,7 @@ const NearMarket = {
    * @param {string} [config.title] — panel header title
    * @param {string} [config.icon] — panel header icon
    * @param {string} [config.placeholder] — input placeholder
+   * @param {string} [config.acceptLabel] — accept button label; set to "" to hide the button
    * @param {Function} [config.renderResult] — custom result renderer (receives result, status)
    * @param {Function} [config.renderMessage] — custom message renderer
    * @param {Function} [config.onClose] — close button handler

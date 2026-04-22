@@ -10,6 +10,7 @@ import InputBar from './components/InputBar.jsx';
  * @property {string} [title] - Header title (default: "Agent Marketplace").
  * @property {string} [icon] - Header icon (default: robot emoji).
  * @property {() => void} [onClose] - Show close button and call this on click.
+ * @property {string} [acceptLabel] - Label for the accept button. Set to empty string to hide it (default: 'Accept & release escrow').
  * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
  * @property {(message: import('./useJob.js').Message, DefaultBubble: React.ComponentType) => React.ReactNode} [renderMessage] - Custom message renderer.
  * @property {string} [placeholder] - Input placeholder text.
@@ -33,6 +34,7 @@ const MarketPanel = forwardRef(function MarketPanel(
     title = 'Agent Marketplace',
     icon = '🤖',
     onClose,
+    acceptLabel,
     renderResult,
     renderMessage,
     placeholder,
@@ -84,6 +86,7 @@ const MarketPanel = forwardRef(function MarketPanel(
           result={result}
           error={error}
           onAccept={accept}
+          acceptLabel={acceptLabel}
           renderResult={renderResult}
         />
 

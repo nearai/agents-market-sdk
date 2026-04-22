@@ -8,6 +8,7 @@ import JsonResult from './components/JsonResult.jsx';
  * @property {Object | null} [result] - Parsed deliverable object.
  * @property {string | null} [error] - Error string.
  * @property {() => Promise<void>} [onAccept] - Called when user clicks accept.
+ * @property {string} [acceptLabel] - Label for the accept button. Set to empty string or omit to hide the button (default: 'Accept & release escrow').
  * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
  */
 
@@ -17,7 +18,7 @@ import JsonResult from './components/JsonResult.jsx';
  * @param {JobPanelProps} props
  * @returns {React.ReactElement}
  */
-export default function JobPanel({ status, result, error, onAccept, renderResult }) {
+export default function JobPanel({ status, result, error, onAccept, acceptLabel = 'Accept & release escrow', renderResult }) {
   const [accepting, setAccepting] = useState(false);
 
   const hasResult = (status === 'submitted' || status === 'completed') && result;
@@ -51,7 +52,7 @@ export default function JobPanel({ status, result, error, onAccept, renderResult
         <div className="nai-card">
           {renderResult ? renderResult(result, status) : <JsonResult data={result} />}
 
-          {status === 'submitted' && onAccept && (
+          {status === 'submitted' && onAccept && acceptLabel && (
             <>
               <div className="nai-divider" />
               <button
@@ -59,7 +60,7 @@ export default function JobPanel({ status, result, error, onAccept, renderResult
                 onClick={handleAccept}
                 disabled={accepting}
               >
-                {accepting ? 'Accepting\u2026' : 'Accept & release escrow'}
+                {accepting ? 'Accepting\u2026' : acceptLabel}
               </button>
             </>
           )}

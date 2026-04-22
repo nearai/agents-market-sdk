@@ -5,6 +5,7 @@
     el: '#nearai-embed-<%= jobId ? jobId.slice(0,8) : "none" %>',
     apiBase: '/api/nearai',
     title: 'AI Customer Intelligence',
+    acceptLabel: 'Accept',
     renderResult: window.renderApplicantReview,
   });
   NearMarket.loadJob('<%= jobId %>');
