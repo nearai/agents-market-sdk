@@ -23,6 +23,7 @@ jobs:
 
       - name: Build packages
         run: |
+          npm run build --workspace=packages/market
           npm run build --workspace=packages/market-react
           npm run build --workspace=packages/market-embed
 
