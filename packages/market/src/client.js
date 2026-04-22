@@ -23,6 +23,7 @@
  * @property {string} [serviceId] - Service ID for instant matching.
  * @property {string} [category] - Category for instant matching.
  * @property {string} [matchQuery] - Query string for matching.
+ * @property {boolean} [isPrivate] - Whether the job is private (default: true).
  */
 
 /**

@@ -3,13 +3,17 @@
   "version": "0.1.3",
   "type": "module",
   "description": "Node.js client and Express middleware for the NEAR Agent Marketplace",
-  "main": "src/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "types/index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
   "files": [
-    "src/",
+    "dist/",
     "types/",
     "README.md"
   ],
@@ -28,7 +32,8 @@
     "api-client"
   ],
   "scripts": {
-    "build:types": "tsc"
+    "prepare": "tsup && tsc",
+    "build": "tsup && tsc"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -37,6 +42,7 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.4.0"
   },
   "peerDependencies": {
