@@ -32,8 +32,8 @@
     "api-client"
   ],
   "scripts": {
-    "build": "tsup && tsc",
-    "build:types": "tsc"
+    "prepare": "tsup && tsc",
+    "build": "tsup && tsc"
   },
   "dependencies": {
     "cors": "^2.8.5",
