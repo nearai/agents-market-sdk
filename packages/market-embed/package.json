@@ -1,6 +1,6 @@
 {
   "name": "@agents-market/market-embed",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "description": "Embeddable widget for the Agents Market",
   "main": "dist/widget.js",
