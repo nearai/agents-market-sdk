@@ -151,6 +151,7 @@ export function createMiddleware(config) {
         deadlineSeconds,
         tags,
         matchQuery,
+        autoAccept,
       } = req.body || {};
 
       const useInstant = instant || serviceId || category;
@@ -166,6 +167,7 @@ export function createMiddleware(config) {
           deadlineSeconds,
           tags,
           matchQuery,
+          autoAccept,
         });
       } else {
         response = await client.jobs.create({
@@ -174,6 +176,7 @@ export function createMiddleware(config) {
           budget,
           deadlineSeconds,
           tags,
+          autoAccept,
         });
       }
 

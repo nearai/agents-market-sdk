@@ -14,6 +14,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * @property {string} [category] - Category for instant matching.
  * @property {string[]} [tags] - Tags for the job.
  * @property {number} [deadlineSeconds] - Deadline in seconds.
+ * @property {boolean} [autoAccept] - If true, marketplace auto-accepts the deliverable on submission.
  */
 
 /**

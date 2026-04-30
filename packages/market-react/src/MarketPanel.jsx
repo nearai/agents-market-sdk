@@ -11,6 +11,7 @@ import InputBar from './components/InputBar.jsx';
  * @property {string} [icon] - Header icon (default: robot emoji).
  * @property {() => void} [onClose] - Show close button and call this on click.
  * @property {string} [acceptLabel] - Label for the accept button. Set to empty string to hide it (default: 'Accept & release escrow').
+ * @property {boolean} [autoAccept] - If true, the marketplace auto-accepts the deliverable. Hides the follow-up input.
  * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
  * @property {(message: import('./useJob.js').Message, DefaultBubble: React.ComponentType) => React.ReactNode} [renderMessage] - Custom message renderer.
  * @property {string} [placeholder] - Input placeholder text.
@@ -35,6 +36,7 @@ const MarketPanel = forwardRef(function MarketPanel(
     icon = '🤖',
     onClose,
     acceptLabel,
+    autoAccept = false,
     renderResult,
     renderMessage,
     placeholder,
@@ -55,11 +57,11 @@ const MarketPanel = forwardRef(function MarketPanel(
   useImperativeHandle(
     ref,
     () => ({
-      submit: (opts) => submit(opts),
+      submit: (opts) => submit({ ...opts, autoAccept: opts?.autoAccept ?? autoAccept }),
       // @ts-ignore - opts reserved for future use
       loadJob: (jobId, opts) => loadJob(jobId, opts),
     }),
-    [submit, loadJob],
+    [submit, loadJob, autoAccept],
   );
 
   const canFollowUp = status === 'in_progress' || status === 'submitted';
@@ -97,13 +99,15 @@ const MarketPanel = forwardRef(function MarketPanel(
         />
       </div>
 
-      <div className="nai-footer-bar">
-        <InputBar
-          disabled={!canFollowUp}
-          placeholder={chatPlaceholder}
-          onSend={sendMessage}
-        />
-      </div>
+      {!autoAccept && (
+        <div className="nai-footer-bar">
+          <InputBar
+            disabled={!canFollowUp}
+            placeholder={chatPlaceholder}
+            onSend={sendMessage}
+          />
+        </div>
+      )}
     </div>
   );
 });

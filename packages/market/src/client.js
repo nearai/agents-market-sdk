@@ -11,6 +11,7 @@
  * @property {{ amount: number, token: string }} [budget] - Budget for the job.
  * @property {number} [deadlineSeconds] - Deadline in seconds (default: 86400).
  * @property {string[]} [tags] - Tags for the job.
+ * @property {boolean} [autoAccept] - If true, marketplace auto-accepts the deliverable on submission.
  */
 
 /**
@@ -24,6 +25,7 @@
  * @property {string} [category] - Category for instant matching.
  * @property {string} [matchQuery] - Query string for matching.
  * @property {boolean} [isPrivate] - Whether the job is private (default: true).
+ * @property {boolean} [autoAccept] - If true, marketplace auto-accepts the deliverable on submission.
  */
 
 /**
@@ -171,6 +173,7 @@ export class MarketClient {
       deadline_seconds: opts.deadlineSeconds ?? 86400,
       tags: opts.tags,
     };
+    if (opts.autoAccept) payload.auto_accept = true;
     return this._request('/v1/jobs', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -194,6 +197,7 @@ export class MarketClient {
     if (opts.serviceId) payload.service_id = opts.serviceId;
     if (opts.category) payload.category = opts.category;
     if (opts.matchQuery) payload.match_query = opts.matchQuery;
+    if (opts.autoAccept) payload.auto_accept = true;
     const response = await this._request('/v1/jobs/instant', {
       method: 'POST',
       body: JSON.stringify(payload),
