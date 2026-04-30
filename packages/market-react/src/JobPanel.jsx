@@ -37,7 +37,10 @@ export default function JobPanel({ status, result, error, onAccept, acceptLabel 
   return (
     <>
       {status === 'idle' && (
-        <div className="nai-status">Ready to submit a job.</div>
+        <div className="nai-status">
+          <div className="nai-spinner" />
+          <span>Loading…</span>
+        </div>
       )}
 
       {status === 'expired' && (
