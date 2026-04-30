@@ -92,11 +92,13 @@ const MarketPanel = forwardRef(function MarketPanel(
           renderResult={renderResult}
         />
 
-        <ChatPanel
-          messages={messages}
-          renderMessage={renderMessage}
-          showInput={false}
-        />
+        {!autoAccept && (
+          <ChatPanel
+            messages={messages}
+            renderMessage={renderMessage}
+            showInput={false}
+          />
+        )}
       </div>
 
       {!autoAccept && (
