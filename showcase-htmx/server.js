@@ -70,7 +70,8 @@ app.post('/submit-review', async (req, res) => {
       serviceId: process.env.NEAR_MARKET_SERVICE_ID,
       title: `Wholesale review: ${name || 'Unknown'}`,
       description,
-      budget: { amount: process.env.NEAR_MARKET_BUDGET || '1.0', token: process.env.NEAR_MARKET_BUDGET_TOKEN || 'USDC' },
+      budget: { amount: process.env.NEAR_MARKET_BUDGET || '1.0', token: process.env.NEAR_MARKET_BUDGET_TOKEN || 'USD' },
+      isPrivate: true,
     });
     const jobId = job.job_id;
     if (!jobId || !/^[a-zA-Z0-9\-]+$/.test(jobId)) {

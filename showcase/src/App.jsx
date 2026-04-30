@@ -9,6 +9,8 @@ import Balance from './Balance.jsx';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api/market';
 const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
+const BUDGET_TOKEN = import.meta.env.VITE_BUDGET_TOKEN || 'USD';
+const BUDGET_AMOUNT = import.meta.env.VITE_BUDGET_AMOUNT || '1.0';
 
 export default function App() {
   const panelRef = useRef(null);
@@ -21,7 +23,8 @@ export default function App() {
         serviceId: SERVICE_ID,
         title,
         description,
-        budget: { amount: '1.0', token: 'USDC' },
+        budget: { amount: BUDGET_AMOUNT, token: BUDGET_TOKEN },
+        isPrivate: true,
       });
       setRefreshKey((k) => k + 1);
     } catch (err) {
