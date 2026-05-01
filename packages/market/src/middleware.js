@@ -152,6 +152,7 @@ export function createMiddleware(config) {
         tags,
         matchQuery,
         autoAccept,
+        isPrivate,
       } = req.body || {};
 
       const useInstant = instant || serviceId || category;
@@ -168,6 +169,7 @@ export function createMiddleware(config) {
           tags,
           matchQuery,
           autoAccept,
+          isPrivate,
         });
       } else {
         response = await client.jobs.create({
