@@ -12,6 +12,8 @@ import InputBar from './components/InputBar.jsx';
  * @property {() => void} [onClose] - Show close button and call this on click.
  * @property {string} [acceptLabel] - Label for the accept button. Set to empty string to hide it (default: 'Accept & release escrow').
  * @property {boolean} [autoAccept] - If true, the marketplace auto-accepts the deliverable. Hides the follow-up input.
+ * @property {boolean} [showFeedback] - If true, render thumbs up / down under the deliverable.
+ * @property {(payload: { jobId?: string, rating: 'up' | 'down', comment?: string, result?: Object | null }) => void | Promise<void>} [onFeedback] - Called when the user submits feedback. Wire this to your own analytics (PostHog, Segment, internal endpoint, …).
  * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
  * @property {(message: import('./useJob.js').Message, DefaultBubble: React.ComponentType) => React.ReactNode} [renderMessage] - Custom message renderer.
  * @property {string} [placeholder] - Input placeholder text.
@@ -37,6 +39,8 @@ const MarketPanel = forwardRef(function MarketPanel(
     onClose,
     acceptLabel,
     autoAccept = false,
+    showFeedback = false,
+    onFeedback,
     renderResult,
     renderMessage,
     placeholder,
@@ -44,6 +48,7 @@ const MarketPanel = forwardRef(function MarketPanel(
   ref,
 ) {
   const {
+    jobId,
     status,
     result,
     messages,
@@ -87,9 +92,12 @@ const MarketPanel = forwardRef(function MarketPanel(
           status={status}
           result={result}
           error={error}
+          jobId={jobId}
           onAccept={accept}
           acceptLabel={acceptLabel}
           hideStatus={autoAccept}
+          showFeedback={showFeedback}
+          onFeedback={onFeedback}
           renderResult={renderResult}
         />
 
