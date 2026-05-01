@@ -9,6 +9,7 @@ import JsonResult from './components/JsonResult.jsx';
  * @property {string | null} [error] - Error string.
  * @property {() => Promise<void>} [onAccept] - Called when user clicks accept.
  * @property {string} [acceptLabel] - Label for the accept button. Set to empty string or omit to hide the button (default: 'Accept & release escrow').
+ * @property {boolean} [hideStatus] - If true, hides the status badge above the result.
  * @property {(result: Object, status: string) => React.ReactNode} [renderResult] - Custom result renderer.
  */
 
@@ -18,7 +19,7 @@ import JsonResult from './components/JsonResult.jsx';
  * @param {JobPanelProps} props
  * @returns {React.ReactElement}
  */
-export default function JobPanel({ status, result, error, onAccept, acceptLabel = 'Accept & release escrow', renderResult }) {
+export default function JobPanel({ status, result, error, onAccept, acceptLabel = 'Accept & release escrow', hideStatus = false, renderResult }) {
   const [accepting, setAccepting] = useState(false);
 
   const hasResult = (status === 'submitted' || status === 'completed') && result;
@@ -47,7 +48,7 @@ export default function JobPanel({ status, result, error, onAccept, acceptLabel 
         <div className="nai-status">This job has expired. No agent completed the work in time.</div>
       )}
 
-      <StatusBadge status={status} />
+      {!hideStatus && <StatusBadge status={status} />}
 
       {error && <div className="nai-error">{error}</div>}
 
