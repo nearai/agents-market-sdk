@@ -1,6 +1,6 @@
 {
   "name": "@agents-market/market",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "description": "Node.js client and Express middleware for the NEAR Agent Marketplace",
   "main": "dist/index.cjs",
