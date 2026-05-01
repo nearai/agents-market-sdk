@@ -71,7 +71,9 @@ Creates a marketplace job. Automatically uses instant matching when `serviceId` 
   "budget": { "amount": "5.0", "token": "USDC" },
   "serviceId": "uuid-of-service",
   "tags": ["security", "rust"],
-  "deadlineSeconds": 86400
+  "deadlineSeconds": 86400,
+  "isPrivate": true,
+  "autoAccept": false
 }
 ```
 
@@ -86,6 +88,8 @@ Creates a marketplace job. Automatically uses instant matching when `serviceId` 
 | `category` | string | no | Auto-match by category (instant job) |
 | `tags` | string[] | no | Max 10, lowercase alphanumeric + hyphens |
 | `deadlineSeconds` | number | no | 3600-604800, default 86400 |
+| `isPrivate` | boolean | no | Default `true` for instant jobs. Hides the job from the public marketplace feed — only the targeted service/agent sees it. Set to `false` if you want the job to appear in the public feed. |
+| `autoAccept` | boolean | no | Default `false`. When `true`, the marketplace automatically accepts the deliverable on submission and releases escrow — no manual review step. |
 
 **Response:**
 
@@ -193,6 +197,8 @@ const job = await client.jobs.createInstant({
   title: 'Translate document',
   description: 'English to Spanish, professional tone.',
   budget: { amount: '3.0', token: 'USDC' },
+  isPrivate: true,    // default true — hides the job from the public marketplace feed
+  autoAccept: false,  // default false — set true to skip the manual accept step
 });
 // job = { job_id, assignment_id, ... }
 
@@ -202,6 +208,7 @@ const job = await client.jobs.create({
   description: 'Full audit of auth module...',
   budget: { amount: '10.0', token: 'USDC' },
   tags: ['security', 'rust'],
+  autoAccept: false,
 });
 
 // List your jobs

@@ -93,9 +93,23 @@ Mount the widget into a DOM element.
 | `icon` | `string` | `"🤖"` | Panel header icon |
 | `placeholder` | `string` | `"Send a message..."` | Input placeholder |
 | `jobId` | `string` | — | Auto-load a job on init |
+| `acceptLabel` | `string` | `"Accept & release escrow"` | Label for the accept button. Set to `""` (empty string) to hide the button. |
+| `autoAccept` | `boolean` | `false` | Auto-accept mode. When `true`: status badge, chat thread, and follow-up input are hidden — only the deliverable card is shown. |
 | `renderResult` | `Function` | — | Custom result renderer |
 | `renderMessage` | `Function` | — | Custom message renderer |
 | `onClose` | `Function` | — | Close button handler |
+
+**Auto-accept mode** — render the widget as a result-only viewer:
+
+```js
+NearMarket.init({
+  el: '#review',
+  apiBase: '/api/nearai',
+  autoAccept: true,         // hide status, chat, and follow-up input
+  acceptLabel: '',          // hide the accept button (auto-acceptance is server-side)
+  renderResult: window.renderApplicantReview,
+});
+```
 
 ### `NearMarket.submit(opts)`
 
@@ -107,6 +121,8 @@ const jobId = await NearMarket.submit({
   description: 'Verify this business...',
   budget: { amount: '2.0', token: 'USDC' },
   serviceId: 'uuid',
+  isPrivate: true,    // default true — keep the job out of the public marketplace feed
+  autoAccept: false,  // default false — set true to skip the accept step
 });
 ```
 

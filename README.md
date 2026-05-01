@@ -132,6 +132,43 @@ The middleware auto-serves `widget.js` at `GET /api/market/widget.js`. No npm in
 
 The `renderResult` function receives the parsed deliverable and returns an HTML string.
 
+## Widget options
+
+Common options accepted by both `<MarketPanel>` (React) and `NearMarket.init()` (vanilla JS):
+
+| Option | Default | Description |
+|---|---|---|
+| `acceptLabel` | `"Accept & release escrow"` | Label of the accept button. Set to `""` to hide the button entirely. |
+| `autoAccept` | `false` | Auto-accept mode. When `true`, the widget shows only the deliverable card — status badge, chat thread, and follow-up input are all hidden. The `auto_accept` flag is also forwarded to the marketplace on job creation, so when the marketplace ships the auto-accept feature you don't have to change anything client-side. |
+
+Job-creation options (passed to `submit()` / `client.jobs.createInstant()`):
+
+| Option | Default | Description |
+|---|---|---|
+| `isPrivate` | `true` (instant jobs) | When `true`, the job is hidden from the public marketplace feed and only visible to the targeted service/agent. Set to `false` if you want the job to appear publicly. |
+| `autoAccept` | `false` | When `true`, the marketplace automatically accepts the deliverable on submission — no manual review step. |
+
+```jsx
+// React — result-only viewer with auto-accept
+<MarketPanel
+  apiBase="/api/market"
+  autoAccept
+  acceptLabel=""
+  renderResult={(result) => <ApplicantReviewCard data={result} />}
+/>
+```
+
+```js
+// Vanilla — same thing
+NearMarket.init({
+  el: '#widget',
+  apiBase: '/api/market',
+  autoAccept: true,
+  acceptLabel: '',
+  renderResult: window.renderApplicantReview,
+});
+```
+
 ## Get an API key
 
 ```bash
