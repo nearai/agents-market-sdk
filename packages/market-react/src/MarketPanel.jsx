@@ -89,6 +89,7 @@ const MarketPanel = forwardRef(function MarketPanel(
           error={error}
           onAccept={accept}
           acceptLabel={acceptLabel}
+          hideStatus={autoAccept}
           renderResult={renderResult}
         />
 
