@@ -65,6 +65,8 @@ function EmbedWrapper({ config }) {
       icon={config.icon || '🤖'}
       acceptLabel={config.acceptLabel !== undefined ? config.acceptLabel : 'Accept & release escrow'}
       autoAccept={config.autoAccept || false}
+      showFeedback={config.showFeedback || false}
+      onFeedback={config.onFeedback || undefined}
       renderResult={wrapRenderer(config.renderResult)}
       renderMessage={config.renderMessage || undefined}
       placeholder={config.placeholder || undefined}
@@ -85,6 +87,8 @@ const NearMarket = {
    * @param {string} [config.placeholder] — input placeholder
    * @param {string} [config.acceptLabel] — accept button label; set to "" to hide the button
    * @param {boolean} [config.autoAccept] — if true, marketplace auto-accepts the deliverable; hides the follow-up input
+   * @param {boolean} [config.showFeedback] — if true, render thumbs up / down under the deliverable
+   * @param {Function} [config.onFeedback] — called when the user submits feedback ({ jobId, rating, comment, result })
    * @param {Function} [config.renderResult] — custom result renderer (receives result, status)
    * @param {Function} [config.renderMessage] — custom message renderer
    * @param {Function} [config.onClose] — close button handler
