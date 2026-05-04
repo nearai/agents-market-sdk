@@ -5,3 +5,5 @@ dist
 .claude/
 .mcp.json
 packages/*/types/
+docs/*.docx
+~$*.docx
