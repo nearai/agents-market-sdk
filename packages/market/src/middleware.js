@@ -7,12 +7,34 @@ import { MarketClient } from './client.js';
 import { parseDeliverable, mapStatus, sanitizeMessageBody } from './utils.js';
 
 /**
+ * @typedef {Object} Logger
+ * @property {(...args: any[]) => void} info - Log an informational message.
+ * @property {(...args: any[]) => void} error - Log an error message.
+ */
+
+/**
  * @typedef {Object} MiddlewareConfig
  * @property {string} apiKey - API key for the marketplace.
  * @property {string} [baseUrl] - Base URL of the marketplace API.
  * @property {number} [pollInterval] - SSE polling interval in ms (default: 3000).
  * @property {string | string[] | boolean} [corsOrigins] - Allowed CORS origins (default: false).
+ * @property {Logger | true} [logger] - Custom logger object with `info` and `error` methods. Pass `true` to use `console`. Default is silent (no logs).
  */
+
+const NOOP_LOGGER = { info: () => {}, error: () => {} };
+const CONSOLE_LOGGER = {
+  info: (...args) => console.log(...args),
+  error: (...args) => console.error(...args),
+};
+
+function resolveLogger(logger) {
+  if (logger === true) return CONSOLE_LOGGER;
+  if (!logger) return NOOP_LOGGER;
+  return {
+    info: typeof logger.info === 'function' ? logger.info.bind(logger) : NOOP_LOGGER.info,
+    error: typeof logger.error === 'function' ? logger.error.bind(logger) : NOOP_LOGGER.error,
+  };
+}
 
 /**
  * createMiddleware(config) — Express Router factory.
@@ -35,9 +57,10 @@ import { parseDeliverable, mapStatus, sanitizeMessageBody } from './utils.js';
  * @returns {import('express').Router}
  */
 export function createMiddleware(config) {
-  const { apiKey, baseUrl, pollInterval = 3000, corsOrigins } = config || {};
+  const { apiKey, baseUrl, pollInterval = 3000, corsOrigins, logger: loggerOpt } = config || {};
   if (!apiKey) throw new Error('createMiddleware: apiKey is required');
 
+  const logger = resolveLogger(loggerOpt);
   const client = new MarketClient({ apiKey, baseUrl });
   const router = Router();
 
@@ -54,9 +77,9 @@ export function createMiddleware(config) {
     try {
       const me = await client.agents.me();
       myAgentId = me.agent_id;
-      console.log(`[market-middleware] my agent_id: ${myAgentId}`);
+      logger.info(`[market-middleware] my agent_id: ${myAgentId}`);
     } catch (err) {
-      console.error('[market-middleware] failed to resolve agent_id:', err.message);
+      logger.error('[market-middleware] failed to resolve agent_id:', err.message);
     }
   })();
 
@@ -180,7 +203,7 @@ export function createMiddleware(config) {
         });
       }
 
-      console.log('[market-middleware] create job response:', JSON.stringify(response));
+      logger.info('[market-middleware] create job response:', JSON.stringify(response));
       const jobId =
         response?.job_id ||
         response?.id ||
@@ -197,7 +220,7 @@ export function createMiddleware(config) {
 
       res.json({ jobId, assignmentId, status: 'in_progress' });
     } catch (err) {
-      console.error('[market-middleware] create job error:', err.message);
+      logger.error('[market-middleware] create job error:', err.message);
       res.status(err.status || 500).json({ error: err.message, body: err.body });
     }
   });
@@ -235,7 +258,7 @@ export function createMiddleware(config) {
       items.sort((a, b) => b.createdAt - a.createdAt);
       res.json(items);
     } catch (err) {
-      console.error('[market-middleware] list jobs error:', err.message);
+      logger.error('[market-middleware] list jobs error:', err.message);
       res.status(err.status || 500).json({ error: err.message });
     }
   });
@@ -301,7 +324,7 @@ export function createMiddleware(config) {
       await client.jobs.sendMessage(assignmentId, body);
       res.json({ ok: true });
     } catch (err) {
-      console.error('[market-middleware] message error:', err.message);
+      logger.error('[market-middleware] message error:', err.message);
       res.status(err.status || 500).json({ error: err.message });
     }
   });
@@ -312,7 +335,7 @@ export function createMiddleware(config) {
       await client.jobs.accept(req.params.id);
       res.json({ ok: true });
     } catch (err) {
-      console.error('[market-middleware] accept error:', err.message);
+      logger.error('[market-middleware] accept error:', err.message);
       res.status(err.status || 500).json({ error: err.message, body: err.body });
     }
   });
