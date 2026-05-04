@@ -329,10 +329,33 @@ export function createMiddleware(config) {
     }
   });
 
-  // Accept deliverable
+  // Accept deliverable. Prefers the assignment-specific endpoint because the
+  // job-level one only works when the job has exactly one submitted assignment.
   router.post('/jobs/:id/accept', async (req, res) => {
     try {
-      await client.jobs.accept(req.params.id);
+      const jobId = req.params.id;
+      const raw = await client.jobs.getAssignments(jobId).catch(() => null);
+      const list = Array.isArray(raw) ? raw : raw?.assignments || [];
+      const submitted = list.find(
+        (a) => (a.status || '').toLowerCase() === 'submitted',
+      );
+
+      if (submitted?.assignment_id) {
+        await client.jobs.acceptAssignment(submitted.assignment_id);
+        return res.json({ ok: true });
+      }
+
+      // No submitted assignment — surface a useful error rather than letting
+      // the marketplace reject a disputed/expired/etc. one.
+      const a = list[0];
+      if (a?.status) {
+        return res.status(409).json({
+          error: `Cannot accept: assignment is in state "${a.status}", expected "submitted".`,
+        });
+      }
+
+      // Fallback: no assignments at all. Try the job-level endpoint.
+      await client.jobs.accept(jobId);
       res.json({ ok: true });
     } catch (err) {
       logger.error('[market-middleware] accept error:', err.message);

@@ -71,6 +71,7 @@ export class MarketClient {
      *   get: (jobId: string) => Promise<any>,
      *   getAssignments: (jobId: string) => Promise<any>,
      *   accept: (jobId: string) => Promise<any>,
+     *   acceptAssignment: (assignmentId: string) => Promise<any>,
      *   requestChanges: (jobId: string, message: string) => Promise<any>,
      *   getMessages: (assignmentId: string) => Promise<any>,
      *   sendMessage: (assignmentId: string, body: string) => Promise<any>,
@@ -83,6 +84,7 @@ export class MarketClient {
       get: (jobId) => this._getJob(jobId),
       getAssignments: (jobId) => this._getAssignments(jobId),
       accept: (jobId) => this._acceptJob(jobId),
+      acceptAssignment: (assignmentId) => this._acceptAssignment(assignmentId),
       requestChanges: (jobId, message) => this._requestChanges(jobId, message),
       getMessages: (assignmentId) => this._getMessages(assignmentId),
       sendMessage: (assignmentId, body) => this._sendMessage(assignmentId, body),
@@ -240,6 +242,16 @@ export class MarketClient {
    */
   _acceptJob(jobId) {
     return this._request(`/v1/jobs/${jobId}/accept`, { method: 'POST' });
+  }
+
+  /**
+   * Accept a specific assignment. Works in all valid states regardless
+   * of how many other submitted assignments the parent job has.
+   * @param {string} assignmentId
+   * @returns {Promise<any>}
+   */
+  _acceptAssignment(assignmentId) {
+    return this._request(`/v1/assignments/${assignmentId}/accept`, { method: 'POST' });
   }
 
   /**

@@ -75,15 +75,24 @@ export function sanitizeMessageBody(body) {
 
 /**
  * Map marketplace job/assignment status to a simple UI status string.
+ * Marketplace API may return lower or capitalized variants (e.g. "Disputed"
+ * in error bodies, "disputed" in JSON), so we normalize to lowercase.
  * @param {string | null | undefined} jobStatus
  * @param {{ status?: string, deliverable?: any } | null | undefined} assignment
  * @returns {string}
  */
 export function mapStatus(jobStatus, assignment) {
-  if (assignment?.status === 'accepted') return 'completed';
-  if (assignment?.status === 'submitted' || assignment?.deliverable) return 'submitted';
-  if (assignment?.status === 'in_progress') return 'in_progress';
-  if (jobStatus === 'expired' || assignment?.status === 'expired') return 'expired';
-  if (jobStatus === 'closed') return 'completed';
-  return jobStatus || 'in_progress';
+  const a = (assignment?.status || '').toLowerCase();
+  const j = (jobStatus || '').toLowerCase();
+
+  // Order matters — a disputed assignment still has a deliverable on it,
+  // so explicit-state checks must run before the deliverable fallback.
+  if (a === 'accepted') return 'completed';
+  if (a === 'disputed') return 'disputed';
+  if (a === 'expired' || j === 'expired') return 'expired';
+  if (a === 'cancelled' || j === 'cancelled') return 'cancelled';
+  if (a === 'submitted') return 'submitted';
+  if (a === 'in_progress') return 'in_progress';
+  if (j === 'closed') return 'completed';
+  return j || 'in_progress';
 }

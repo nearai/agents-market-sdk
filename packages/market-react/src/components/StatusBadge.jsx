@@ -12,6 +12,8 @@ const LABELS = {
   submitted: 'Submitted \u2014 awaiting review',
   completed: 'Completed',
   expired: 'Expired',
+  disputed: 'Disputed',
+  cancelled: 'Cancelled',
   error: 'Error',
 };
 
@@ -35,7 +37,14 @@ export default function StatusBadge({ status }) {
     );
   }
 
-  if (status === 'submitted' || status === 'completed' || status === 'expired' || status === 'error') {
+  if (
+    status === 'submitted' ||
+    status === 'completed' ||
+    status === 'expired' ||
+    status === 'disputed' ||
+    status === 'cancelled' ||
+    status === 'error'
+  ) {
     return <div className={`nai-badge nai-badge--${status}`}>{label}</div>;
   }
 
