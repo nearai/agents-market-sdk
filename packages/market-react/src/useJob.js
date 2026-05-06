@@ -15,6 +15,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * @property {string[]} [tags] - Tags for the job.
  * @property {number} [deadlineSeconds] - Deadline in seconds.
  * @property {boolean} [autoAccept] - If true, marketplace auto-accepts the deliverable on submission.
+ * @property {boolean} [isPrivate] - If true, hides the job from the public marketplace feed (instant jobs only). Default true.
  */
 
 /**

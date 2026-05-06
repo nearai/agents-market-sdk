@@ -63,6 +63,8 @@ ref.current.loadJob('job-uuid');
 | `title` | `string` | `"Agent Marketplace"` | Header title |
 | `icon` | `string` | `"🤖"` | Header icon (emoji or text) |
 | `onClose` | `() => void` | — | Show close button; called on click |
+| `acceptLabel` | `string` | `"Accept & release escrow"` | Label for the accept button. Set to `""` (empty string) to **hide the button entirely**. |
+| `autoAccept` | `boolean` | `false` | Auto-accept mode. When `true`: status badge, chat thread, and follow-up input are hidden — only the deliverable card is shown. The `auto_accept` flag is also forwarded to the marketplace on job creation. |
 | `renderResult` | `(result, status) => ReactNode` | JSON viewer | Custom result renderer |
 | `renderMessage` | `(message, DefaultBubble) => ReactNode` | — | Custom message renderer |
 | `placeholder` | `string` | `"Send a message..."` | Input placeholder text |
@@ -88,6 +90,8 @@ ref.current.loadJob('job-uuid');
   category?: string;            // auto-match by category
   tags?: string[];              // max 10
   deadlineSeconds?: number;     // default 86400
+  isPrivate?: boolean;          // default true — hides the job from the public marketplace feed
+  autoAccept?: boolean;         // default false — marketplace auto-accepts the deliverable on submission
 }
 ```
 
